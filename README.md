@@ -39,3 +39,5 @@ This program implements the logic game 2048 using the Pygame library. The player
 
 ## Game Start
 - `if __name__ == "__main__": main(WINDOW)`: Starts the main `main()` function when the program starts, initiating the game.
+
+based on: https://www.youtube.com/@TechWithTim
