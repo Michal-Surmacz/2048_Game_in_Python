@@ -140,7 +140,44 @@ def move_tiles(window, tiles, clock, direction):
         def merge_check(tile, next_tile): return tile.x > next_tile.x + MOVE_VEL
         move_check = lambda tile, next_tile: tile.x > next_tile.x + RECT_WIDTH + MOVE_VEL
         ceil = True
+        
     # Similar functions and variables for other directions (right, up, down)
+    elif direction == "right":
+        def sort_func(x): return x.col
+        reverse = True
+        delta = (MOVE_VEL, 0)
+        def boundary_check(tile): return tile.col == COLS - 1
+        def get_next_tile(tile): return tiles.get(f"{tile.row}{tile.col + 1}")
+        def merge_check(
+            tile, next_tile): return tile.x < next_tile.x - MOVE_VEL
+        move_check = (
+            lambda tile, next_tile: tile.x + RECT_WIDTH + MOVE_VEL < next_tile.x
+        )
+        ceil = False
+    elif direction == "up":
+        def sort_func(x): return x.row
+        reverse = False
+        delta = (0, -MOVE_VEL)
+        def boundary_check(tile): return tile.row == 0
+        def get_next_tile(tile): return tiles.get(f"{tile.row - 1}{tile.col}")
+        def merge_check(
+            tile, next_tile): return tile.y > next_tile.y + MOVE_VEL
+        move_check = (
+            lambda tile, next_tile: tile.y > next_tile.y + RECT_HEIGHT + MOVE_VEL
+        )
+        ceil = True
+    elif direction == "down":
+        def sort_func(x): return x.row
+        reverse = True
+        delta = (0, MOVE_VEL)
+        def boundary_check(tile): return tile.row == ROWS - 1
+        def get_next_tile(tile): return tiles.get(f"{tile.row + 1}{tile.col}")
+        def merge_check(
+            tile, next_tile): return tile.y < next_tile.y - MOVE_VEL
+        move_check = (
+            lambda tile, next_tile: tile.y + RECT_HEIGHT + MOVE_VEL < next_tile.y
+        )
+        ceil = False
 
     while updated:  # Loop until no more tiles can be moved
         clock.tick(FPS)  # Control game speed
